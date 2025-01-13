@@ -11,7 +11,7 @@ struct Array{
     int size;
 }arr;
 
-//Function to display array..
+//Function to display array.
 void Display(struct Array arr,int n){
     
     for(int i=0;i<arr.size;i++) cout<<arr.A[i]<<" ";
