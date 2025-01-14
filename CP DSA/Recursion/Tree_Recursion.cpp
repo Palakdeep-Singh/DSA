@@ -8,7 +8,7 @@ void fun(int n){
 
         printf("%d ",n);
  
-        fun(n-1);    //tree formation. Lec-55.
+        fun(n-1);    //tree formation.
         fun(n-1);    // Time Complexity = 2^n & activation records n+1
     }
 }
