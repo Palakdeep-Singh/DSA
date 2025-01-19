@@ -173,5 +173,7 @@ int main(){
     else if(t== 2 ){ printf("2nd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
     else if(t== 3){ printf("3rd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
     else printf("%dth Largest Element is: %d",t,Largest_Kth_Term(array.A,array.size,t));
+
+    free(array.A); //Free the memory allocated.
     return 0;
 }
