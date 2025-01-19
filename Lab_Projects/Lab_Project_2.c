@@ -1,7 +1,8 @@
 // <-- Lab Project 2-->
-//Things remained to Cover: Moving Avg,Largest kth  term,Sorting by minimum repeatition of elements..  
+//Things remained to Cover: Moving Avg,Sorting by minimum repeatition of elements..  
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 struct Array{
         int *A;
@@ -64,7 +65,7 @@ struct Array{
         int j= i-1;          //Now sort the array 
         while(j>=0 && temp < arr1[j]){
            arr1[j+1] = arr1[j];
-           j--;
+           j--;           
            operations++;
         }
         arr1[j+1] = temp;
@@ -97,6 +98,46 @@ struct Array{
             }
     }
     }
+
+
+    //Finding Kth Largest Element...
+    int Largest_Kth_Term(int arr[],int n,int k){
+         int count=0,array[n],max,index=0;  //Some variables to store data.
+                                          // Create an array of size n and initialize it with -1.
+                                         //Now when we get the maximum number we will change the value of that index to 0.
+         for(int i=0;i<n;i++) array[i] = -1;
+
+         if(k>=0 && k<n){          
+                                        //Check only if k is > or <= array size.
+         while(count!=k){               //Run loop until we get the kth largest element.
+            max = INT_MIN;              //Storing the lowest value in max variable 
+                                        
+       for(int i=0;i<n;i++){   
+             if(max<arr[i] && array[i]!=0){    //Find maximum element... Remove that element in next iteration.
+                 max = arr[i];
+                 index = i;                   //Store the index of maximum element. When we get the maximum element.
+         }
+       }
+       array[index] = 0;   //Now increment in that particular index in array. 
+
+                           //Now it may be possible to get duplicates we have to remove them.
+       for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(arr[i] == arr[j] && array[j]!=0){
+                array[j] = 0;
+            }
+        }
+       }
+                          //Now after getting max element increment in count.
+       count++;
+       }
+       if(count == k){   //when we reach upto k just return that maximum value.
+           return max;
+       }
+    }
+    }
+
+
 int main(){
 
     //Create a Dynamic Array in Structure...
@@ -107,16 +148,30 @@ int main(){
     printf("Enter the elements of the array: ");
     for(int i=0;i<array.size;i++) scanf("%d",&array.A[i]); 
 
-    frequency(array.A,array.size);
-    Bubble_Sort(&array,array.size);
+    // frequency(array.A,array.size);
+    // Bubble_Sort(&array,array.size);
 
-    int arr1[array.size];
-    printf("\nEnter Array elements for Insertion Sort: ");
-    for(int i=0;i<array.size;i++) scanf("%d",&arr1[i]);
+    // int arr1[array.size];
+    // printf("\nEnter Array elements for Insertion Sort: ");
+    // for(int i=0;i<array.size;i++) scanf("%d",&arr1[i]);
 
-    Insertion_Sort(arr1,array.size);
-    Duplicate_Removal(array.A,array.size);
-
-
+    // Insertion_Sort(arr1,array.size);
+    // Duplicate_Removal(array.A,array.size);
+    
+   
+    //Input for Kth Largest Element..
+    int t;
+    printf("\nEnter the value of K: ");
+    scanf("%d",&t);
+    if(t > array.size){
+        printf("Invalid Input!\n");
+        return 0; //If t crosses size of array just stop the program.
+    }
+    
+    //Just for printing... You can skip this part.
+    if(t== 1){ printf("1st Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    else if(t== 2 ){ printf("2nd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    else if(t== 3){ printf("3rd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    else printf("%dth Largest Element is: %d",t,Largest_Kth_Term(array.A,array.size,t));
     return 0;
 }
