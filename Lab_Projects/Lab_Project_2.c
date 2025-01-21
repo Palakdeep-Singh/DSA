@@ -1,5 +1,5 @@
 // <-- Lab Project 2-->
-//Things remained to Cover: Moving Avg,Sorting by minimum repeatition of elements..  
+//Things remained to Cover: Sorting by minimum repeatition of elements..  
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -9,6 +9,39 @@ struct Array{
         int size;
     }array;
     
+       //Moving average....
+       void moving_avg(struct Array arr,int n,int win){
+    
+        float array2[n],sum=0;   //create some variables used in program and array to store the average values.
+        int box=win, k=0,count=1;     //store value of window in a box variable and count the values..
+       
+                                       //Now if we have box size greater than count we will find average of numbers upto the count index.
+            while(win>=count){
+            for(int j=0;j<count;j++){
+                sum += arr.A[j]; 
+            }
+            array2[k++] = sum/count;
+            count++;
+            sum = 0;                         
+        }
+         sum=0;                       //Now keep the value of sum to 0 if it is non zero.
+                                       //Now when box size is greater than count what to do?
+                                        //Run loop until box is smaller than the array length...
+            while(box < n){
+              for(int j = count-win;j<count;j++){   //Here we will start from count - win index and go upto count
+                                                   // if win size is 3 and count becomes 4 we will start from 1 and reach upto 3 counting 1 2 3 index
+                                                   // and getting average and storing in the array2.
+                sum += arr.A[j];
+              }
+           array2[k++] = sum/win;
+           sum = 0;
+           count++;
+           box++;                                   //Increase count and box values 1 by 1 to move to next index until reached the last index.
+        }
+        for(int i=0;i<k;i++) printf("%.1f ",array2[i]);   //Simply print the elements of array2..
+       }
+
+
        //Finding Frequency of each element in an array...
        void frequency(int arr[],int n){
 
@@ -160,20 +193,21 @@ int main(){
     
    
     //Input for Kth Largest Element..
-    int t;
-    printf("\nEnter the value of K: ");
-    scanf("%d",&t);
-    if(t > array.size){
-        printf("Invalid Input!\n");
-        return 0; //If t crosses size of array just stop the program.
-    }
+    // int t;
+    // printf("\nEnter the value of K: ");
+    // scanf("%d",&t);
+    // if(t > array.size){
+    //     printf("Invalid Input!\n");
+    //     return 0; //If t crosses size of array just stop the program.
+    // }
     
-    //Just for printing... You can skip this part.
-    if(t== 1){ printf("1st Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    else if(t== 2 ){ printf("2nd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    else if(t== 3){ printf("3rd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    else printf("%dth Largest Element is: %d",t,Largest_Kth_Term(array.A,array.size,t));
+    // //Just for printing... You can skip this part.
+    // if(t== 1){ printf("1st Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    // else if(t== 2 ){ printf("2nd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    // else if(t== 3){ printf("3rd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
+    // else printf("%dth Largest Element is: %d",t,Largest_Kth_Term(array.A,array.size,t));
 
+    moving_avg(array,array.size,3);
     free(array.A); //Free the memory allocated.
     return 0;
 }
