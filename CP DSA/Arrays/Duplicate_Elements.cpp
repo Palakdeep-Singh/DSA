@@ -53,5 +53,6 @@ int main(){
    }
    cout<<endl;   
 
+    delete [] A;
     return 0;
 }
