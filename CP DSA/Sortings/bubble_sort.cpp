@@ -1,4 +1,4 @@
-//           Bubble Sort Algorithm... (time complexity O(n^2) in worst case and O(n) in best case)..
+//           Bubble Sort Algorithm... (time complexity O(n^2) in worst case and O(n) in best case).
 #include<iostream>
 
 using namespace std;
