@@ -163,15 +163,18 @@ int main(){
 
     // -------------------------------------------
     // //for string sorting...
-    // char str[] = "NAGPUR";
-    // printf("\n");
+
+    printf("\nSorting String using Merge Sort:");
+    char str[] = "NAGPUR";
+    int t = strlen(str);
+    printf("\n");
     
-    // int ascii_[n];
-    // for (int i = 0;str[i]<'\0'; i++) {
-    //     ascii_[i] = (int)str[i];
-    // }
-    // mergeSort(ascii_,0, n-1);
+    int ascii_[t];
+    for (int i = 0;i<t; i++) {
+        ascii_[i] = (int)str[i];
+    }
+    mergeSort(ascii_,0, t-1);
     
-    // for(int i=0;i<n;i++) printf("%c",ascii_[i]);
+    for(int i=0;i<t;i++) printf("%c",ascii_[i]);
     return 0;
 }
