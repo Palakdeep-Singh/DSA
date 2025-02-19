@@ -106,7 +106,8 @@ int len(struct Node *p){
 void _delete_(int index,int n){
    struct Node *p,*q = NULL;  //for deleting the node move two pointers..
    
-   if(index<1 || index > n) return;
+   // Check if list is empty or index is invalid
+   if(first == NULL || index < 1 || index > n) return;
    
    //if we have to delete the first node..
    //put the first address in that node and point first node to next node
@@ -115,20 +116,25 @@ void _delete_(int index,int n){
        p = first;
        first = p->next;
        free(p);
+       return;  // Exit after deleting first node
    }
    
    //for deleting at particular location move the pointer from first node to that node.
    p = first;
-   for(int i=1;i<index;i++){
+   for(int i=1;i<index && p != NULL;i++){
          q = p;  //one q pointer will move 1 step behind the p..
          p = p->next;
    }
    
-   //juat add p->next in q->next --> put address of nexts->next in that node
+   // If p is NULL, the index was out of bounds
+   if(p == NULL) return;
+   
+   //just add p->next in q->next --> put address of nexts->next in that node
    // and freep the node we are pointing to.
    q->next = p->next;
    free(p);
 }
+
 
 
 //------------concatinate link lists------------
