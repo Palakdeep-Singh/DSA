@@ -25,7 +25,7 @@ struct Array{
             sum = 0;                         
         }
          sum=0;                       //Now keep the value of sum to 0 if it is non zero.
-                                       //Now when box size is greater than count what to do?
+                                       //when box size is greater than count what to do?
                                         //Run loop until box is smaller than the array length...
             while(box < n){
               for(int j = count-win;j<count;j++){   //Here we will start from count - win index and go upto count
@@ -44,8 +44,8 @@ struct Array{
 
        //Finding Frequency of each element in an array...
        void frequency(int arr[],int n){
-
         int freq[n],count=1;
+        for(int i=0;i<n;i++) freq[i] = -1;
         //Run two loops to compare each element with other elements.
         //By usuing count variable count the occurence of element. 
         for(int i=0;i<n;i++){
@@ -67,6 +67,78 @@ struct Array{
             }
        }
        }
+
+    void sort_and_by_frequency(struct Array arr, int n) {
+    int max = arr.A[0];
+    int min = arr.A[0];
+
+    // Step 1: Find the max and min values to determine the range
+    for (int i = 1; i < n; i++) {
+        if (arr.A[i] > max) max = arr.A[i];
+        if (arr.A[i] < min) min = arr.A[i];
+    }
+
+    // Step 2: Counting Sort to sort the array in ascending order
+    int range = max - min + 1;
+    int count[range];
+    for (int i = 0; i < range; i++) {
+        count[i] = 0;  // Initialize the count array to 0
+    }
+
+    // Count the frequency of each element
+    for (int i = 0; i < n; i++) {
+        count[arr.A[i] - min]++;
+    }
+
+    // Place the sorted elements back in the array
+    int index = 0;
+    for (int i = 0; i < range; i++) {
+        while (count[i] > 0) {
+            arr.A[index++] = i + min;
+            count[i]--;
+        }
+    }
+
+    // Step 3: Count the frequency of each element and move most frequent to the end
+    int frequency[n];
+    int temp[n];
+    for (int i = 0; i < n; i++) {
+        frequency[i] = -1;  // Initialize the frequency array to -1
+    }
+
+    // Count frequencies of elements
+    for (int i = 0; i < n; i++) {
+        if (frequency[i] == -1) {
+            int freq = 1;
+            for (int j = i + 1; j < n; j++) {
+                if (arr.A[i] == arr.A[j]) {
+                    frequency[j] = 0;  // Mark as visited
+                    freq++;
+                }
+            }
+            frequency[i] = freq;
+        }
+    }
+
+    // Move elements with the most frequency to the end
+    int idx = 0;
+    for (int i = 0; i < n; i++) {
+        if (frequency[i] != -1) {
+            for (int j = 0; j < frequency[i]; j++) {
+                temp[idx++] = arr.A[i];
+            }
+        }
+    }
+
+    // Copy the result back to the original array
+    for (int i = 0; i < n; i++) {
+        arr.A[i] = temp[i];
+    }
+
+    for(int i=0;i<n;i++) printf("%d ",arr.A[i]);
+}
+
+
       //Bubble Sort for Sorting the Array...
       //Make a count variable and increment it when swapping occurs.
       //Help to find out no. of swaps.
@@ -113,12 +185,14 @@ struct Array{
     void Duplicate_Removal(int arr[],int n){
 
         int remove[n],count=1;
-         
+        
+        for(int i=0;i<n;i++) remove[i] = -1;
+
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
             if(arr[i] == arr[j]){
              count++;
-             remove[j] =0;
+             remove[j] = 0;
             } }
             if(remove[i] != 0){
             remove[i] = count;
@@ -174,40 +248,46 @@ struct Array{
 int main(){
 
     //Create a Dynamic Array in Structure...
-    array.A = (int *) malloc (array.size * sizeof(int));
     printf("Enter the size of the array: ");
     scanf("%d",&array.size);
+
+    array.A = (int *) malloc (array.size * sizeof(int));
     
     printf("Enter the elements of the array: ");
     for(int i=0;i<array.size;i++) scanf("%d",&array.A[i]); 
 
+
+    // frequency(array.A,array.size);
+    // Bubble_Sort(&array,array.size);
+  
     // frequency(array.A,array.size);
     // Bubble_Sort(&array,array.size);
 
-    // int arr1[array.size];
-    // printf("\nEnter Array elements for Insertion Sort: ");
-    // for(int i=0;i<array.size;i++) scanf("%d",&arr1[i]);
+    //              Perform all operations....
+    moving_avg(array,array.size,3);
+    printf("\n");
+    frequency(array.A,array.size);
+    printf("\n");
 
-    // Insertion_Sort(arr1,array.size);
-    // Duplicate_Removal(array.A,array.size);
+    Bubble_Sort(&array,array.size);
+
+    int arr1[array.size];
+    printf("\nEnter Array elements for Insertion Sort: ");
+    for(int i=0;i<array.size;i++) scanf("%d",&arr1[i]);
+
+    Insertion_Sort(arr1,array.size);
+    Duplicate_Removal(array.A,array.size);
     
    
     //Input for Kth Largest Element..
-    // int t;
-    // printf("\nEnter the value of K: ");
-    // scanf("%d",&t);
-    // if(t > array.size){
-    //     printf("Invalid Input!\n");
-    //     return 0; //If t crosses size of array just stop the program.
-    // }
-    
-    // //Just for printing... You can skip this part.
-    // if(t== 1){ printf("1st Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    // else if(t== 2 ){ printf("2nd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    // else if(t== 3){ printf("3rd Largest Element is: %d",Largest_Kth_Term(array.A,array.size,t)); }
-    // else printf("%dth Largest Element is: %d",t,Largest_Kth_Term(array.A,array.size,t));
+    int t;
+    printf("\nEnter the value of K:");
+    scanf("%d",&t);
 
-    moving_avg(array,array.size,3);
+    //print...
+    int result = Largest_Kth_Term(array.A,array.size,t);
+    printf("Kth Largest Element is: %d",result);
+
     free(array.A); //Free the memory allocated.
     return 0;
 }
