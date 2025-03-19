@@ -132,7 +132,7 @@ void merge(struct cll *p, struct cll *q){
         }
     }
 
-    //if linked list are not fully traversed then add remaining elements;
+    //if linked list are not fully traversed then add remaining elements as lists are sorted,we are adding them till the last element of list.
     while(p != NULL){
         temp->next = p;
         p->prev = temp;
@@ -148,7 +148,7 @@ void merge(struct cll *p, struct cll *q){
       
     }
 
-    // now link the last remaining element with head,,
+    // now link the last remaining element with head of merged linked list to make it circular.
     temp->next = third;
     third->prev = temp;
 }
